@@ -12,14 +12,21 @@ ADD https://astral.sh/uv/install.sh /uv-installer.sh
 
 # Run the installer then remove it
 RUN sh /uv-installer.sh && rm /uv-installer.sh
+
+WORKDIR /app
+# Copy requirements.txt to the container
+COPY requirements.txt /app/
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+
+
+# Copy the rest of the application code to the container
+COPY . /app/
 
 # Ensure the installed binary is on the `PATH`
 ENV PATH="/root/.local/bin/:$PATH"
 ENV AIPROXY_TOKEN=""
 
-WORKDIR /app
-
-COPY main.py /app/
-
-CMD ["uv","run","main.py"]
+# Run the FastAPI application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
