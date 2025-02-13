@@ -319,14 +319,14 @@ tools = [
 def install_uv():
     try:
         subprocess.run(["pip", "install", "uv"], check=True)
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as e:
         return {"error": str(e)}
 
 # Define the functions that will be executed based on the task description
 def install_npx():
     try:
         subprocess.run(["pip", "install", "npx"], check=True)
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as e:
         return {"error": str(e)}
 
 def download_file(url, filename):
