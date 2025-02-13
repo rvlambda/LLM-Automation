@@ -1,0 +1,9 @@
+requests
+fastapi
+starlette
+python-dotenv
+httpx
+python-dateutil
+pillow
+pytesseract
+numpy

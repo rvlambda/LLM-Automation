@@ -1,0 +1,48 @@
+{
+    "id": "chatcmpl-B0JMLHObp96Y65md2JkUoGAfxBeJp",
+    "object": "chat.completion",
+    "created": 1739414117,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                    {
+                        "id": "call_ojxAFYoVBsWlNAyD9mNH1Woo",
+                        "type": "function",
+                        "function": {
+                            "name": "find_similar",
+                            "arguments": "{\"input_file_name\":\"/data/comments.txt\",\"output_file_name\":\"/data/comments-similar.txt\"}"
+                        }
+                    }
+                ],
+                "refusal": null
+            },
+            "logprobs": null,
+            "finish_reason": "tool_calls"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 427,
+        "completion_tokens": 33,
+        "total_tokens": 460,
+        "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "audio_tokens": 0,
+            "accepted_prediction_tokens": 0,
+            "rejected_prediction_tokens": 0
+        }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_72ed7ab54c",
+    "monthlyCost": 0.0791194200000001,
+    "cost": 0.001479,
+    "monthlyRequests": 312
+}
