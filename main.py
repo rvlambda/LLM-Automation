@@ -651,6 +651,8 @@ async def get_ticket_sales(database_file_name:str,column_list:str,output_file_na
                     
 # Define the OpenAI call function
 async def call_openai(task_description: str):
+    print("Inside OpenAI")
+    print(OPENAI_API_KEY)
     # Define the JSON payload for the OpenAI API
     try:
         payload={"model": "gpt-4o-mini",
@@ -670,11 +672,13 @@ async def call_openai(task_description: str):
                 json=payload
             )
         #breakpoint()
+        print("Response Status Code : ",response.status_code)
         if response.status_code == 200:
             response_data = response.json()
             print("OpenAIL call Success")
             return response_data
     except Exception as e:
+        print("Error in OpenAI call:",e)
         return {"error": str(e)} 
 
 # Define the endpoint to automate the tasks
@@ -683,7 +687,7 @@ async def automate_tasks(task_description: str = Query(None,alias='task')):
     try:
         print("Hello")
         response_data = await call_openai(task_description)
-        
+        print(response_data)
         #response_data = 1   
         if response_data:
             # Example of extracting function and arguments (adjust based on actual OpenAI response format)
