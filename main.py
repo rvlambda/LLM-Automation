@@ -319,6 +319,7 @@ tools = [
 def install_uv():
     try:
         subprocess.run(["pip", "install", "uv"], check=True)
+        print("UV Installed")
     except subprocess.CalledProcessError as e:
         return {"error": str(e)}
 
@@ -326,6 +327,7 @@ def install_uv():
 def install_npx():
     try:
         subprocess.run(["pip", "install", "npx"], check=True)
+        print("NPX Installed")
     except subprocess.CalledProcessError as e:
         return {"error": str(e)}
 
@@ -342,6 +344,7 @@ def download_file(url, filename):
         if response.status_code == 200:
             with open(path, 'wb') as file:
                 file.write(response.content)
+            print("File Downloaded")
         return path
     except Exception as e:
         return {"error": str(e)}
@@ -349,6 +352,7 @@ def download_file(url, filename):
 def run_python_file(filename,email_id):
     try:
         subprocess.run(["python", filename , email_id], check=True)
+        print("Python File Executed")
     except subprocess.CalledProcessError as e:
         return {"error": str(e)}
 
@@ -388,6 +392,7 @@ async def format_file(file_name: str):
         install_npx()
         file_path = get_path(file_name)
         subprocess.run(["npx", "prettier@3.4.2", "--write",file_path],capture_output=True,text=True,check=True)
+        print("File Formatted")
     except Exception as e:
         return {"error": str(e)}
 
@@ -413,6 +418,7 @@ async def day_count(input_file_name: str,day_name: str,output_file_name:str):
         # Write the result to the output file
         with open(file_path, "w") as file:
             file.write(str(count))
+        print("Day Counted")
     except Exception as e:
         return {"error": str(e)}
 
@@ -433,6 +439,7 @@ async def sort_contacts(input_file_name: str,output_file_name: str,keys:list):
         output_file_path = get_path(output_file_name)
         with open(output_file_path, "w") as file:
             json.dump(sorted_data, file)
+        print("Contacts Sorted")
     except Exception as e:
         return {"error": str(e)}
 
@@ -461,7 +468,7 @@ async def write_log(input_file_path: str,file_ext:str,output_file_name:str,numbe
                         outfile.write(lines[line_number - 1])
                     else:
                         outfile.write(f"Line {line_number} does not exist in {log_file}\n")
- 
+        print("Log Written")
     except Exception as e:
         return {"error": str(e)}
     
@@ -494,6 +501,7 @@ async def find_style_markdown(input_file_path: str,file_ext:str,output_file_name
         # Write to JSON file
         with open(output_file_path, "w", encoding="utf-8") as json_file:
             json.dump(index, json_file, indent=2, sort_keys=True)
+        print("Markdown task completed")
     except Exception as e:
         return {"error": str(e)}
     
@@ -560,6 +568,7 @@ async def extract_sender(input_file_name: str,output_file_name: str,email_field_
 
         with open(output_file_path, "w") as file:
             file.write(response['choices'][0]['message']['content'])
+        print("Sender Extracted")
     except Exception as e:
         return {"error": str(e)}
     
@@ -582,6 +591,7 @@ async def get_creditcard_details(input_file_name: str,output_file_name: str):
         text = extract_text_from_png(input_file_path)
         with open(output_file_path, 'w') as f:
             f.write(text)
+        print("Credit Card Details Extracted")
     except Exception as e:
         return {"error": str(e)}
 
@@ -606,6 +616,7 @@ async def find_similar(input_file_name: str,output_file_name: str):
         with open(output_file_path, "w") as f:
             for comment in most_similar_comments:
                 f.write(comment + "\n")
+        print("Similar Comments Found")
     except Exception as e:
         return {"error": str(e)}
 
@@ -634,7 +645,7 @@ async def get_ticket_sales(database_file_name:str,column_list:str,output_file_na
 
         # Close the database connection
         conn.close()
-
+        print("Ticket Sales Calculated")
     except Exception as e:
         return {"error": str(e)}
                     
@@ -658,9 +669,10 @@ async def call_openai(task_description: str):
                 headers=headers,
                 json=payload
             )
-        
+        #breakpoint()
         if response.status_code == 200:
             response_data = response.json()
+            print("OpenAIL call Success")
             return response_data
     except Exception as e:
         return {"error": str(e)} 
@@ -669,13 +681,18 @@ async def call_openai(task_description: str):
 @app.post("/run")
 async def automate_tasks(task_description: str = Query(None,alias='task')):
     try:
+ 
         response_data = await call_openai(task_description)
-            
+        
+        #response_data = 1   
         if response_data:
             # Example of extracting function and arguments (adjust based on actual OpenAI response format)
             function_name = response_data['choices'][0]['message']['tool_calls'][0]['function']['name']
             arguments = json.loads(response_data['choices'][0]['message']['tool_calls'][0]['function']['arguments'])
-
+            print(f"Function: {function_name}")
+            print("Arguments:")
+            for key, value in arguments.items():
+                print(f"{key}: {value}")
             # Map the function name to the actual function and call it with the arguments
             if function_name == "run_file":
                 email_id = arguments['email_id']
