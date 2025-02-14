@@ -393,7 +393,10 @@ async def format_file(file_name: str):
         file_path = get_path(file_name)
         print(file_path)
         command = ["npx", "--no-install","prettier@3.4.2","--write", file_path]
-        
+        # Execute the command using subprocess.run
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        stdout, stderr = process.communicate()
+
         #subprocess.run(["npx", "prettier@3.4.2", "--write",file_path],capture_output=True,text=True,check=True)
         #breakpoint()
         print("File Formatted")
