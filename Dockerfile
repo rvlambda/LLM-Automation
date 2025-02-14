@@ -10,6 +10,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
     curl \
     ca-certificates
 
+# Install Prettier globally
+RUN npm install -g prettier@3.4.2
+
 # Download the latest installer
 ADD https://astral.sh/uv/install.sh /uv-installer.sh
 
