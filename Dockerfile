@@ -1,7 +1,10 @@
 FROM python:3.12-slim-bookworm
 
-# The installer requires curl (and certificates) to download the release archive
-RUN apt-get update && apt-get install -y \
+# Install Node.js, npm, tesseract, and other dependencies
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get update && apt-get install -y \
+    nodejs \
+    npm \
     tesseract-ocr \
     libtesseract-dev \
     curl \
@@ -24,6 +27,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code to the container
 COPY . /app/
 
+
+ENV PATH="/usr/local/lib/python3.12/site-packages/:$PATH"
 # Ensure the installed binary is on the `PATH`
 ENV PATH="/root/.local/bin/:$PATH"
 ENV AIPROXY_TOKEN=""

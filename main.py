@@ -391,9 +391,14 @@ async def format_file(file_name: str):
         # npx prettier --write .           # Format code or docs
         install_npx()
         file_path = get_path(file_name)
-        subprocess.run(["npx", "prettier@3.4.2", "--write",file_path],capture_output=True,text=True,check=True)
+        print(file_path)
+        command = ["npx", "--no-install","prettier@3.4.2","--write", file_path]
+        
+        #subprocess.run(["npx", "prettier@3.4.2", "--write",file_path],capture_output=True,text=True,check=True)
+        #breakpoint()
         print("File Formatted")
     except Exception as e:
+        #breakpoint()
         return {"error": str(e)}
 
 async def day_count(input_file_name: str,day_name: str,output_file_name:str):
