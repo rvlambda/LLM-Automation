@@ -699,7 +699,7 @@ async def automate_tasks(task_description: str = Query(None,alias='task')):
                 print(f"{key}: {value}")
             # Map the function name to the actual function and call it with the arguments
             if function_name == "run_file":
-                email_id = arguments['email_id']
+                email_id = "22f2001532@ds.study.iitm.ac.in"#arguments['email_id']
                 file_name = arguments['file_name']
                 file_url = arguments['file_url']
                 result = await run_python(email_id,file_name,file_url)
