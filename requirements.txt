@@ -8,3 +8,4 @@ pillow
 pytesseract
 numpy
 uvicorn
+faker
