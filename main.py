@@ -681,7 +681,7 @@ async def call_openai(task_description: str):
 @app.post("/run")
 async def automate_tasks(task_description: str = Query(None,alias='task')):
     try:
- 
+        print("Hello")
         response_data = await call_openai(task_description)
         
         #response_data = 1   
